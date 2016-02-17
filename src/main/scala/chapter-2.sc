@@ -20,3 +20,16 @@ object MyModule {
 
 // A member can be a method declared with the def keyword,
 // or it can be another object declared with val or object.
+
+//--- 2.4 ---
+
+def factorial(n: Int): Int =  {
+  def go(n: Int, acc: Int): Int = {
+    if (n <= 0) acc
+    else go(n-1, acc*n)
+  }
+
+  go(n,1)
+}
+
+factorial(3)

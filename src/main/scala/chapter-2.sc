@@ -12,6 +12,8 @@ object MyModule {
     println(formatAbs(-42))
 }
 
+MyModule.main(Array())
+
 // Aside from some technicalities, every value in Scala is what’s called an object,
 // and each object may have zero or more members.
 
@@ -24,6 +26,7 @@ object MyModule {
 //--- 2.4 ---
 
 def factorial(n: Int): Int =  {
+  @annotation.tailrec
   def go(n: Int, acc: Int): Int = {
     if (n <= 0) acc
     else go(n-1, acc*n)
@@ -33,3 +36,57 @@ def factorial(n: Int): Int =  {
 }
 
 factorial(3)
+
+
+// Exercise 2.1
+
+def fib(n: Int): Int = {
+  def go(n: Int): Int = {
+    if (n == 1) 0
+    else if (n == 2) 1
+    else  go(n-1) + go(n-2)
+  }
+
+  go(n)
+}
+
+fib(1)
+fib(2)
+fib(3)
+fib(4)
+fib(5)
+
+
+// ---
+object MyModuleUpdated {
+  def abs(n: Int): Int =
+    if (n < 0) -n
+    else n
+
+  def factorial(n: Int): Int =  {
+    @annotation.tailrec
+    def go(n: Int, acc: Int): Int = {
+      if (n <= 0) acc
+      else go(n-1, acc*n)
+    }
+
+    go(n,1)
+  }
+
+  private def formatAbs(x: Int) = {
+    val msg = "The absolute value of %d is %d"
+    msg.format(x, abs(x))
+  }
+
+  private def formatFactorial(x: Int) = {
+    val msg = "The factorial of %d is %d"
+    msg.format(x, factorial(x))
+  }
+
+  def main(args: Array[String]): Unit = {
+    println(formatAbs(-42))
+    println(formatFactorial(3))
+  }
+}
+
+MyModuleUpdated.main(Array())

@@ -59,3 +59,21 @@ def isOrderedInt(x1: Int, x2: Int): Boolean = {
 
 isSorted(sortedArr, isOrderedInt)
 isSorted(notSortedArr, isOrderedInt)
+
+// Anon. functions
+
+polymorphicFindFirst(Array(1,3,5), (x: Int) => x == 3)
+(x: Int, y: Int) => x == y
+
+
+// Here, the anon. function declaration...
+(a: Int, b: Int) => a < b
+// is equivalent to...
+val lessThan = new Function2[Int, Int, Boolean] {
+  def apply(a: Int, b: Int) = a < b
+}
+
+// Moreover,
+lessThan(10, 20)
+// is equivalent to...
+lessThan.apply(10, 20)

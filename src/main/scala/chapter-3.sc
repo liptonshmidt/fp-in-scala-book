@@ -33,9 +33,21 @@ object List {
     case Cons(_, t) => Cons(h, t)
   }
 
-  def drop[A](n: Int, l: List[A]): List[A] = {
-    ???
+  def drop[A](n: Int, l: List[A]): List[A] = l match {
+    case Nil => Nil
+    case Cons(_,t) => {
+      if (n > 0) drop(n-1, t)
+      else l
+    }
   }
+
+  //alternative implementation:
+//  def drop[A](l: List[A], n: Int): List[A] =
+//    if (n <= 0) l
+//    else l match {
+//      case Nil => Nil
+//      case Cons(_,t) => drop(t, n-1)
+//    }
 
   def apply[A](as: A*): List[A] =
     if (as.isEmpty) Nil
@@ -81,4 +93,8 @@ List.drop(0, List(1,2,3))
 List.drop(1, List(1,2,3))
 List.drop(2, List(1,2,3))
 List.drop(3, List(1,2,3))
+// corner cases:
+// should return Nil
 List.drop(4, List(1,2,3))
+// should return Nil
+List.drop(2, List())

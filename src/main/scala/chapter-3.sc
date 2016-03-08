@@ -27,12 +27,14 @@ object List {
     case Cons(_, t) => t
   }
 
+  // exercise 3.3
   def setHead[A](h: A, l: List[A]): List[A] = l match {
     // case Nil => Nil
     case Nil => sys.error("setHead on empty list")
     case Cons(_, t) => Cons(h, t)
   }
 
+  // exercise 3.4
   def drop[A](n: Int, l: List[A]): List[A] = l match {
     case Nil => Nil
     case Cons(_,t) => {
@@ -41,13 +43,30 @@ object List {
     }
   }
 
-  //alternative implementation:
-//  def drop[A](l: List[A], n: Int): List[A] =
-//    if (n <= 0) l
-//    else l match {
-//      case Nil => Nil
-//      case Cons(_,t) => drop(t, n-1)
-//    }
+  // Alternative implementation:
+  def dropAlternative[A](l: List[A], n: Int): List[A] =
+    if (n <= 0) l
+    else l match {
+      case Nil => Nil
+      case Cons(_,t) => dropAlternative(t, n-1)
+    }
+
+  // exercise 3.5
+  def dropWhile[A](l: List[A], f: A => Boolean): List[A] = l match {
+    case Nil => Nil
+    case Cons(h, t) => {
+      if (f(h)) dropWhile(t, f)
+      else l
+    }
+  }
+
+  // More elegant implementation:
+  def dropWhileAlternative[A](l: List[A], f: A => Boolean): List[A] =
+  l match {
+    case Cons(h,t) if f(h) => dropWhileAlternative(t, f)
+    case _ => l
+  }
+
 
   def apply[A](as: A*): List[A] =
     if (as.isEmpty) Nil
@@ -98,3 +117,17 @@ List.drop(3, List(1,2,3))
 List.drop(4, List(1,2,3))
 // should return Nil
 List.drop(2, List())
+
+
+
+// exercise 3.5
+// Implement dropWhile, which removes elements
+// from the List prefix as long
+// as they match a predicate.
+
+// nothing to drop:
+List.dropWhile(List(1,2,3), (i: Int) => false)
+// drop all
+List.dropWhile(List(1,2,3), (i: Int) => true)
+// drop part of the list
+List.dropWhile(List(0, 2, 4, 1, 3), (i: Int) => i % 2 == 0)

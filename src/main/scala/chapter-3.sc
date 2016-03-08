@@ -20,6 +20,10 @@ object List {
     case Cons(x, xs) => x * product(xs)
   }
 
+  def apply[A](as: A*): List[A] =
+    if (as.isEmpty) Nil
+    else Cons(as.head, apply(as.tail: _*))
+
   // exercise 3.2
   def tail[A](l: List[A]): List[A] = l match {
     // case Nil => Nil
@@ -67,10 +71,26 @@ object List {
     case _ => l
   }
 
+  // exercise 3.6
+  def init[A](l: List[A]): List[A] =
+  l match {
+    case Nil => sys.error("init of empty list")
+    case Cons(_,Nil) => Nil
+    case Cons(h,t) => Cons(h,init(t))
+  }
 
-  def apply[A](as: A*): List[A] =
-    if (as.isEmpty) Nil
-    else Cons(as.head, apply(as.tail: _*))
+  // solution with local mutable buffer - still meets RT
+  def init2[A](l: List[A]): List[A] = {
+    import collection.mutable.ListBuffer
+    val buf = new ListBuffer[A]
+    @annotation.tailrec
+    def go(cur: List[A]): List[A] = cur match {
+      case Nil => sys.error("init of empty list")
+      case Cons(_,Nil) => List(buf.toList: _*)
+      case Cons(h,t) => buf += h; go(t)
+    }
+    go(l)
+  }
 }
 
 val ex1: List[Double] = Nil
@@ -131,3 +151,9 @@ List.dropWhile(List(1,2,3), (i: Int) => false)
 List.dropWhile(List(1,2,3), (i: Int) => true)
 // drop part of the list
 List.dropWhile(List(0, 2, 4, 1, 3), (i: Int) => i % 2 == 0)
+
+// exercise 3.6
+// Implement a function, init,
+// that returns a List consisting of
+// all but the last element of a List.
+List.init(List(1,2,3,4))

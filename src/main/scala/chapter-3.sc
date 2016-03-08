@@ -22,9 +22,19 @@ object List {
 
   // exercise 3.2
   def tail[A](l: List[A]): List[A] = l match {
-//    case Nil => Nil
+    // case Nil => Nil
     case Nil => sys.error("tail of empty list")
-    case Cons(_,t) => t
+    case Cons(_, t) => t
+  }
+
+  def setHead[A](h: A, l: List[A]): List[A] = l match {
+    // case Nil => Nil
+    case Nil => sys.error("setHead on empty list")
+    case Cons(_, t) => Cons(h, t)
+  }
+
+  def drop[A](n: Int, l: List[A]): List[A] = {
+    ???
   }
 
   def apply[A](as: A*): List[A] =
@@ -62,3 +72,13 @@ val x = List(1,2,3,4,5) match {
 // exercise 3.2
 // tail function
 List.tail(List(1,2,3))
+
+// exercise 3.3
+List.setHead(0, List(1,2,3))
+
+// exercise 3.4
+List.drop(0, List(1,2,3))
+List.drop(1, List(1,2,3))
+List.drop(2, List(1,2,3))
+List.drop(3, List(1,2,3))
+List.drop(4, List(1,2,3))

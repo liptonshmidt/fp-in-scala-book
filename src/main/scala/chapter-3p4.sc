@@ -56,10 +56,19 @@ product2(List(2,3,4))
 
 foldRight(List(1,2,3), Nil:List[Int])(Cons(_,_))
 
-def length[A](as: List[A]): Int = {
-  foldRight(as, 0)((_, ac) => 1 + ac)
+// ex. 3.9
+def length[A](l: List[A]): Int = {
+  foldRight(l, 0)((_, ac) => ac + 1)
 }
 
 length(List(1,3,4))
 length(List())
+
+// ex. 3.10
+@annotation.tailrec
+def foldLeft[A,B](as: List[A], z: B)(f: (B, A) => B): B = {
+  as match {
+    case Nil => z
+    case Cons(h,t) => foldLeft(t, f(z,h))(f)  }
+}
 

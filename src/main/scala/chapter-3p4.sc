@@ -48,7 +48,18 @@ sum2(List(1,2,3))
 
 def product2(ds: List[Double]): Double = {
   foldRight(ds, 1.0)((x,y) => x * y)
+  // more concise notation:
+//  foldRight(ds, 1.0)(_ * _)
 }
 
 product2(List(2,3,4))
+
+foldRight(List(1,2,3), Nil:List[Int])(Cons(_,_))
+
+def length[A](as: List[A]): Int = {
+  foldRight(as, 0)((_, ac) => 1 + ac)
+}
+
+length(List(1,3,4))
+length(List())
 

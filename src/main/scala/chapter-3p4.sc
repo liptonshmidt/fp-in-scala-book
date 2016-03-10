@@ -72,3 +72,27 @@ def foldLeft[A,B](as: List[A], z: B)(f: (B, A) => B): B = {
     case Cons(h,t) => foldLeft(t, f(z,h))(f)  }
 }
 
+// ex. 3.11
+// sum, product and List length using foldLeft
+
+//---
+def sum3(ints: List[Int]): Int = {
+  foldLeft(ints, 0)(_ + _)
+}
+
+sum3(List(1,2,5))
+
+//---
+def product3(ds: List[Double]): Double = {
+  foldLeft(ds, 1.0)(_ * _)
+}
+
+product3(List(2,3,5))
+
+//---
+def length3[A](l: List[A]): Int = {
+  foldLeft(l, 0)((ac, _) => ac + 1)
+}
+
+length3(List())
+length3(List(1, 2, 4))

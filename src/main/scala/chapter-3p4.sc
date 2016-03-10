@@ -96,3 +96,15 @@ def length3[A](l: List[A]): Int = {
 
 length3(List())
 length3(List(1, 2, 4))
+
+// ex. 3.12
+// Write a function that returns
+// the reverse of a list
+// (given List(1,2,3) it returns List(3,2,1)).
+// See if you can write it using a fold.
+def reverse[A](l: List[A]): List[A] = {
+  ???
+}
+
+reverse(List(1,2,3))
+reverse(List())

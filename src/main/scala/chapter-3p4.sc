@@ -103,8 +103,22 @@ length3(List(1, 2, 4))
 // (given List(1,2,3) it returns List(3,2,1)).
 // See if you can write it using a fold.
 def reverse[A](l: List[A]): List[A] = {
-  ???
+  foldLeft(l, List[A]())((acc,h) => Cons(h,acc))
 }
 
 reverse(List(1,2,3))
 reverse(List())
+
+// ex 3.13
+// Hard: Can you write foldLeft in terms of foldRight?
+// How about the other way around?
+// Implementing foldRight via foldLeft is useful
+// because it lets us implement foldRight tail-recursively,
+// which means it works even for large lists
+// without overflowing the stack.
+
+def foldRightViaFoldLeft[A,B](l: List[A], z: B)(f: (A,B) => B): B =
+  foldLeft(reverse(l), z)((b,a) => f(a,b))
+
+def foldLeftViaFoldRight[A,B](l: List[A], z: B)(f: (B,A) => B): B =
+  foldRight(l, (b:B) => b)((a,g) => b => g(f(b,a)))(z)

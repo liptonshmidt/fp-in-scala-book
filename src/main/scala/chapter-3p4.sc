@@ -122,3 +122,7 @@ def foldRightViaFoldLeft[A,B](l: List[A], z: B)(f: (A,B) => B): B =
 
 def foldLeftViaFoldRight[A,B](l: List[A], z: B)(f: (B,A) => B): B =
   foldRight(l, (b:B) => b)((a,g) => b => g(f(b,a)))(z)
+
+// ex. 3.14
+// Implement append in terms of
+// either foldLeft or foldRight.

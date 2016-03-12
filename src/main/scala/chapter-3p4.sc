@@ -126,3 +126,15 @@ def foldLeftViaFoldRight[A,B](l: List[A], z: B)(f: (B,A) => B): B =
 // ex. 3.14
 // Implement append in terms of
 // either foldLeft or foldRight.
+
+//def append[A](a1: List[A], a2: List[A]): List[A] = a1 match {
+//  case Nil => a2
+//  case Cons(h,t) => Cons(h, append(t, a2)) }
+
+def appendViaFoldRight[A](a1: List[A], a2: List[A]): List[A] = {
+  foldRight(a1, a2)(Cons(_,_))
+}
+
+appendViaFoldRight(List(1,2,3), List(4,5,6))
+
+

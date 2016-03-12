@@ -137,4 +137,15 @@ def appendViaFoldRight[A](a1: List[A], a2: List[A]): List[A] = {
 
 appendViaFoldRight(List(1,2,3), List(4,5,6))
 
+// ex. 3.15
+// Hard: Write a function that concatenates
+// a list of lists into a single list.
+// Its runtime should be linear
+// in the total length of all lists.
+// Try to use functions we have already defined.
 
+def flatten[A](l: List[List[A]]): List[A] = {
+  foldRight(l, Nil:List[A])(appendViaFoldRight)
+}
+
+flatten(List(List(1,2,3), List(4), List(5,6)))

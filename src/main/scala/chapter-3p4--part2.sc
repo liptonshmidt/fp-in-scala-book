@@ -43,3 +43,22 @@ def incrementAll2(l: List[Int]): List[Int] = {
 incrementAll2(List(1,2,3))
 
 
+// ex. 3.17: Write a function that turns each value
+// in a List[Double] into a String.
+// You can use the expression d.toString
+// to convert some d: Double to a String.
+def turnDoubleValtoString(l: List[Double]): List[String] = {
+  foldRight(l, Nil: List[String])((h, t) => Cons(h.toString, t))
+}
+
+turnDoubleValtoString(List(1.0, 2.3, 3.1414))
+
+// ex. 3.18: Map
+def map[A,B](as: List[A])(f: A => B): List[B] = {
+  foldRight(as, Nil: List[B])((h, t) => Cons(f(h), t))
+}
+
+map(List(1,2,3))(_ + 1)
+map(List(1,2,3))(_.toString)
+
+

@@ -61,4 +61,23 @@ def map[A,B](as: List[A])(f: A => B): List[B] = {
 map(List(1,2,3))(_ + 1)
 map(List(1,2,3))(_.toString)
 
+// implementation via local mutation:
+def map_2[A,B](l: List[A])(f: A => B): List[B] = {
+  val buf = new collection.mutable.ListBuffer[B]
+  def go(l: List[A]): Unit = l match {
+    case Nil => ()
+    case Cons(h,t) => buf += f(h); go(t)
+  }
+  go(l)
+  List(buf.toList: _*) // converting from the standard Scala list to the list we've defined here
+}
 
+// Info on Scala _* notation:
+// http://stackoverflow.com/questions/1124099/what-is-the-meaning-of-colon-underscore-and-star-in-lifts-sitemapentries
+
+//.. append the array argument with a colon
+// and an _* symbol, like this:
+// scala> echo(arr: _*)
+//This notation tells the compiler to pass
+// each element of arr as its own argument to echo,
+// rather than all of it as a single argument.

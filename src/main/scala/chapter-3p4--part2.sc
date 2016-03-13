@@ -81,3 +81,13 @@ def map_2[A,B](l: List[A])(f: A => B): List[B] = {
 //This notation tells the compiler to pass
 // each element of arr as its own argument to echo,
 // rather than all of it as a single argument.
+
+// ex. 3.19:
+// Write a function filter that removes elements
+// from a list unless they satisfy a given predicate.
+// Use it to remove all odd numbers from a List[Int].
+def filter[A](as: List[A])(f: A => Boolean): List[A] = {
+  ???
+}
+
+filter(List(1,2,3,4,5))(_ % 2 == 0)

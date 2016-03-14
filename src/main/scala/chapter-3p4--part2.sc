@@ -87,7 +87,35 @@ def map_2[A,B](l: List[A])(f: A => B): List[B] = {
 // from a list unless they satisfy a given predicate.
 // Use it to remove all odd numbers from a List[Int].
 def filter[A](as: List[A])(f: A => Boolean): List[A] = {
-  ???
+  val buf = new collection.mutable.ListBuffer[A]
+  def go(l: List[A]): Unit = l match {
+    case Nil => ()
+    case Cons(h,t) => if(f(h)) buf += h; go(t)
+  }
+
+  go(as)
+  List(buf.toList: _*)
 }
 
 filter(List(1,2,3,4,5))(_ % 2 == 0)
+
+
+
+def filterViaFoldRight[A](l: List[A])(f: A => Boolean): List[A] = {
+   foldRight(l, Nil: List[A])((h, t) => if (f(h)) Cons(h,t) else t)
+}
+
+filterViaFoldRight(List(1,2,3,4,5))(_ % 2 == 0)
+
+//Write a function flatMap that works
+// like map except that the function given
+// will return a list instead of a single result,
+// and that list should be inserted into
+// the final resulting list.
+def flatMap[A,B](as: List[A])(f: A => List[B]): List[B] = {
+  ???
+}
+
+flatMap(List(1,2,3))(i => List(i,i))
+// should result in
+// List(1,1,2,2,3,3).

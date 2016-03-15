@@ -1,8 +1,6 @@
 // 3.4.1 More functions for working with lists
 
-
 sealed trait List[+A]
-
 // data constructors
 case object Nil extends List[Nothing]
 // Cons -- short for 'construct'
@@ -25,7 +23,6 @@ def foldLeft[A,B](as: List[A], z: B)(f: (B, A) => B): B = {
     case Nil => z
     case Cons(h,t) => foldLeft(t, f(z,h))(f)  }
 }
-
 // ex. 3.16: Write a function
 // that transforms a list of integers
 // by adding 1 to each element.
@@ -42,7 +39,6 @@ def incrementAll2(l: List[Int]): List[Int] = {
 
 incrementAll2(List(1,2,3))
 
-
 // ex. 3.17: Write a function that turns each value
 // in a List[Double] into a String.
 // You can use the expression d.toString
@@ -52,7 +48,6 @@ def turnDoubleValtoString(l: List[Double]): List[String] = {
 }
 
 turnDoubleValtoString(List(1.0, 2.3, 3.1414))
-
 // ex. 3.18: Map
 def map[A,B](as: List[A])(f: A => B): List[B] = {
   foldRight(as, Nil: List[B])((h, t) => Cons(f(h), t))
@@ -107,13 +102,24 @@ def filterViaFoldRight[A](l: List[A])(f: A => Boolean): List[A] = {
 
 filterViaFoldRight(List(1,2,3,4,5))(_ % 2 == 0)
 
-//Write a function flatMap that works
+// ex. 3.20
+// Write a function flatMap that works
 // like map except that the function given
 // will return a list instead of a single result,
 // and that list should be inserted into
 // the final resulting list.
-def flatMap[A,B](as: List[A])(f: A => List[B]): List[B] = {
-  ???
+
+def flatMap[A,B](l: List[A])(f: A => List[B]): List[B] = {
+  flatten(map_2(l)(f))
+}
+
+
+def flatten[A](l: List[List[A]]): List[A] = {
+  foldRight(l, Nil:List[A])(appendViaFoldRight)
+}
+
+def appendViaFoldRight[A](a1: List[A], a2: List[A]): List[A] = {
+  foldRight(a1, a2)(Cons(_,_))
 }
 
 flatMap(List(1,2,3))(i => List(i,i))

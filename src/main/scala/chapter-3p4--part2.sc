@@ -126,7 +126,7 @@ flatMap(List(1,2,3))(i => List(i,i))
 // should result in
 // List(1,1,2,2,3,3).
 
-// ex 3.21
+// ex. 3.21
 // Use flatMap to implement filter.
 
 def filterViaFlatMap[A](as: List[A])(f: A => Boolean): List[A] = {
@@ -134,3 +134,26 @@ def filterViaFlatMap[A](as: List[A])(f: A => Boolean): List[A] = {
 }
 
 filterViaFlatMap(List(1,2,3,4,5))(_ % 2 == 0)
+
+// ex. 3.22
+// Write a function that accepts two lists
+// and constructs a new list
+// by adding corresponding elements.
+// For example, List(1,2,3) and List(4,5,6)
+// become List(5,7,9).
+
+def zipSum(a: List[Int], b: List[Int]): List[Int] = {
+//  def go(res: List[Int], aa: List[Int], bb: List[Int]): List[Int] = {
+//    aa match {
+//      case Nil => res
+//      case Cons(ah, at) =>
+//        bb match {
+//          case Cons(bh, bt) => go(Cons(res, ah+bh), at, bt)
+//        }
+//    }
+//  }
+//
+//  go(Nil, a, b)
+}
+
+zipSum(List(1,2,3), List(4,5,6))

@@ -142,18 +142,29 @@ filterViaFlatMap(List(1,2,3,4,5))(_ % 2 == 0)
 // For example, List(1,2,3) and List(4,5,6)
 // become List(5,7,9).
 
-def zipSum(a: List[Int], b: List[Int]): List[Int] = {
-//  def go(res: List[Int], aa: List[Int], bb: List[Int]): List[Int] = {
-//    aa match {
-//      case Nil => res
-//      case Cons(ah, at) =>
-//        bb match {
-//          case Cons(bh, bt) => go(Cons(res, ah+bh), at, bt)
-//        }
-//    }
-//  }
-//
-//  go(Nil, a, b)
+def addPairwise(a: List[Int], b: List[Int]): List[Int] = (a,b) match {
+  case (Nil, _) => Nil
+  case (_, Nil) => Nil
+  case (Cons(h1,t1), Cons(h2,t2)) => Cons(h1+h2, addPairwise(t1,t2))
 }
 
-zipSum(List(1,2,3), List(4,5,6))
+addPairwise(List(1,2,3), List(4,5,6))
+
+// ex. 3.23
+// Generalize the function you just wrote
+// so that it’s not specific
+// to integers or addition
+def zipWith[A,B,C](a: List[A], b: List[B])(f: (A, B) => C): List[C] = (a,b) match {
+  case (Nil, _) => Nil
+  case (_, Nil) => Nil
+  case (Cons(h1,t1), Cons(h2,t2)) => Cons(f(h1, h2), zipWith(t1,t2)(f))
+}
+
+def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = {
+  ???
+}
+
+assert(hasSubsequence(List(1,2,3,4), List(1,3)))
+assert(hasSubsequence(List(1,2,3,4), List(2,3)))
+assert(hasSubsequence(List(1,2,3,4), List(4)))
+assert(!hasSubsequence(List(1,2,3,4), List(2,1)))

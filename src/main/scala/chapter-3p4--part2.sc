@@ -125,3 +125,12 @@ def appendViaFoldRight[A](a1: List[A], a2: List[A]): List[A] = {
 flatMap(List(1,2,3))(i => List(i,i))
 // should result in
 // List(1,1,2,2,3,3).
+
+// ex 3.21
+// Use flatMap to implement filter.
+
+def filterViaFlatMap[A](as: List[A])(f: A => Boolean): List[A] = {
+  flatMap(as)(i => if (f(i)) List(i) else Nil )
+}
+
+filterViaFlatMap(List(1,2,3,4,5))(_ % 2 == 0)

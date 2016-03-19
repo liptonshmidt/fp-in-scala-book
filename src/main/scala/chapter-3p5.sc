@@ -31,10 +31,30 @@ def maxEl(t: Tree[Int]): Int = t match {
   case Leaf(x: Int) => x
   case Branch(l, r) => maxEl(l) max maxEl(r)
 }
-
 val l11 = Leaf(1)
 val l12 = Leaf(2)
 val b1 = Branch(l11, l12)
 maxEl(b1)
 
+// ex. 3.27
+// Write a function depth
+// that returns the maximum path length
+// from the root of a tree to any leaf.
 
+def depth[A](t: Tree[A]):Int = t match {
+  case Leaf(_)  => 0
+  case Branch(l, r) => 1 + (depth(l) max depth(r))
+}
+
+assert(depth(b) == 1)
+
+// ex. 3.28
+// Write a function map,
+// analogous to the method
+// of the same name on List,
+// that modifies each element in a tree
+// with a given function.
+
+def mapTree[A](t: Tree[A]): Tree[A] = {
+  ???
+}

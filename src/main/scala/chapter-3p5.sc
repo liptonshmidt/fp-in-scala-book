@@ -55,6 +55,37 @@ assert(depth(b) == 1)
 // that modifies each element in a tree
 // with a given function.
 
-def mapTree[A](t: Tree[A]): Tree[A] = {
-  ???
+def mapTree[A, B](t: Tree[A])(f: A=>B): Tree[B] = t match {
+  case Leaf(x: A) => Leaf(f(x))
+  case Branch(l, r) => Branch(mapTree(l)(f), mapTree(r)(f))
 }
+
+
+// abstract fold
+def fold[A,B](t: Tree[A])(l: A => B)(b: (B,B) => B): B = t match {
+  case Leaf(x: A) => l(x)
+  case Branch(left, right) => b(fold(left)(l)(b), fold(right)(l)(b))
+}
+
+def sizeViaFold[A](t: Tree[A]): Int = {
+  fold(t)(_=> 1)((lSize, rSize) => 1 + lSize + rSize)
+}
+
+def sizeViaFold_2[A](t: Tree[A]): Int = {
+  fold(t)(a=> 1)(1 + _ + _)
+}
+
+def maxElViaFold(t: Tree[Int]): Int = {
+  fold(t)(x=>x)((l, r) => l max r)
+}
+
+def maxElViaFold_2(t: Tree[Int]): Int = {
+  fold(t)(a=>a)(_ max _)
+}
+
+def depthViaFold[A](t: Tree[A]):Int = {
+  fold(t)(_=>0)((l, r) => 1 + l max r)
+}
+
+def mapViaFold[A,B](t: Tree[A])(f: A => B): Tree[B] =
+  fold(t)(a => Leaf(f(a)): Tree[B])(Branch(_,_))

@@ -31,10 +31,10 @@ sealed trait Option[+A] {
     case Some(a) => Some(a)
   }
 
-  def orElse[B >: A](ob: => Option[B]): Option[B] = {
-    ???
-  }
+  def orElse[B >: A](ob: => Option[B]): Option[B] =
+    this map (Some(_)) getOrElse ob
 
-  //  def filter(f: A => Boolean): Option[A]
+  def filter(f: A => Boolean): Option[A] =
+    flatMap((a) => if(f(a)) Some(a) else None)
 }
 

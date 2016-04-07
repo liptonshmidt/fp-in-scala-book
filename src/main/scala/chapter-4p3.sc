@@ -38,3 +38,25 @@ sealed trait Option[+A] {
     flatMap((a) => if(f(a)) Some(a) else None)
 }
 
+// exercise 4.2
+def variance(xs: Seq[Double]): Option[Double] =
+  mean(xs) flatMap (m => mean(xs.map(x => math.pow(x - m, 2))))
+
+//def mean(xs: List[Double]): Option[Double] = {
+//  if (xs.length > 0) {
+//    Some[Double](xs.sum / xs.length)
+//  } else {
+//    None[Double]
+//  }
+//}
+
+//Some(1)
+//val xs = Seq(1.0, 2.0)
+//xs.sum
+//xs.length
+//Some(xs.sum / xs.length)
+
+//val x = List(1.0, 2.0)
+//println(x.sum)
+//
+//println(List(1,3,3).sum)

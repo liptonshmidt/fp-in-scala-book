@@ -35,18 +35,45 @@ sealed trait Option[+A] {
 
   def filter(f: A => Boolean): Option[A] =
     flatMap((a) => if(f(a)) Some(a) else None)
+
+  // lift function
+  def lift[A,B](f: A => B): Option[A] => Option[B] = _ map f
 }
 
-case class Some[+A](get: A) extends Option[A]
-case object None extends Option[Nothing]
+//case class Some[+A](get: A) extends Option[A]
+//case object None extends Option[Nothing]
 
 object Chapter04 {
+  case class Some[+A](get: A) extends Option[A]
+  case object None extends Option[Nothing]
 
+  // exercise 4.2 (implement variance)
   def mean(xs: Seq[Double]): Option[Double] =
     if (xs.isEmpty) None
     else Some(xs.sum / xs.length)
 
-  // exercise 4.2
   def variance(xs: Seq[Double]): Option[Double] =
     mean(xs) flatMap (m => mean(xs.map(x => math.pow(x - m, 2))))
+
+  // exercise 4.3
+  // Write a generic function map2 that combines
+  // two Option values using a binary function.
+  // If either Option value is None,
+  // then the return value is too.
+  def map2[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] =
+    (a, b) match {
+      case (Some(x), Some(y)) => Some(f(x,y))
+      case _ => None
+    }
+
+  // exercise 4.4
+  // Write a function sequence that combines a list of Options
+  // into one Option containing a list
+  // of all the Some values in the original list.
+  // If the original list contains None even once,
+  // the result of the function should be None;
+  // otherwise the result should be Some
+  // with a list of all the values.
+  def sequence[A](a: List[Option[A]]): Option[List[A]] =
+    ???
 }
